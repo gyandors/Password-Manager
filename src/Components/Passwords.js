@@ -13,6 +13,7 @@ export default function Passwords(props) {
             title={pass.title}
             password={pass.password}
             onDeletePassword={props.onDeletePassword}
+            onEditPassword={props.onEditPassword}
           />
         );
       })}

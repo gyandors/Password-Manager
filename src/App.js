@@ -24,6 +24,19 @@ export default function App() {
     setPassword(updatedPassword);
   }
 
+  function handleEditPassword(editedTitle, editedPass, id) {
+    console.log(editedTitle, editedPass, id);
+    for (let pass of password) {
+      // console.log(pass);
+      for (let key in pass) {
+        console.log(pass[key]);
+      }
+    }
+    // setPassword((prevPass) => {
+    // });
+    // console.log(password);
+  }
+
   const [search, setSearch] = useState('');
 
   function handleChange(e) {
@@ -44,6 +57,7 @@ export default function App() {
       <Passwords
         password={searchedPassword}
         onDeletePassword={handleDeletePassword}
+        onEditPassword={handleEditPassword}
       />
     </div>
   );
