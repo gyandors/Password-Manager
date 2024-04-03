@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import NewPassword from './Components/NewPassword';
 import Passwords from './Components/Passwords';
+import SearchPassword from './Components/SearchPassword';
 
 export default function App() {
   const [password, setPassword] = useState([
@@ -13,46 +14,47 @@ export default function App() {
     { id: 6, title: 'Aadhaar', password: 'DRj24af$' },
   ]);
 
-  function handleAddPassword(newData) {
+  function handleAddPassword(newPass) {
     setPassword((prevPassword) => {
-      return [newData, ...prevPassword];
+      return [newPass, ...prevPassword];
     });
   }
 
   function handleDeletePassword(delId) {
-    const updatedPassword = password.filter((pass) => pass.id !== delId);
+    const updatedPassword = password.filter((p) => p.id !== delId);
     setPassword(updatedPassword);
   }
 
-  function handleEditPassword(editedTitle, editedPass, id) {
-    console.log(editedTitle, editedPass, id);
-    for (let pass of password) {
-      // console.log(pass);
-      for (let key in pass) {
-        console.log(pass[key]);
+  function handleEditPassword(editedTitle, editedPass, editId) {
+    const updatedPassword = password.map((p) => {
+      if (p.id === editId) {
+        return { id: editId, title: editedTitle, password: editedPass };
       }
-    }
-    // setPassword((prevPass) => {
-    // });
-    // console.log(password);
+      return p;
+    });
+    setPassword(updatedPassword);
   }
 
   const [search, setSearch] = useState('');
-
-  function handleChange(e) {
+  function handleSearch(e) {
     setSearch(e.target.value);
   }
 
-  const searchedPassword = password.filter((pass) => {
-    return pass.title.toLowerCase().includes(search.toLowerCase());
+  const searchedPassword = password.filter((p) => {
+    return p.title.toLowerCase().includes(search.toLowerCase());
+  });
+
+  //Sorting the passwords based on title
+  searchedPassword.sort((a, b) => {
+    if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+    if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
+    return 0;
   });
 
   return (
     <div className="App">
-      <h3>Password Manager</h3>
-      <p>Total passwords: {password.length}</p>
-      <label htmlFor="search">Search</label>
-      <input type="text" id="search" onChange={handleChange} />
+      <h3 className="heading">Password Manager</h3>
+      <SearchPassword password={password} onSearch={handleSearch} />
       <NewPassword onAddPassword={handleAddPassword} />
       <Passwords
         password={searchedPassword}

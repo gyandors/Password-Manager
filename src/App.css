@@ -1,0 +1,14 @@
+.App {
+  width: 50%;
+  margin: auto;
+}
+
+.heading {
+  margin: 10px 0;
+}
+
+@media (max-width: 360px) {
+  .App {
+    width: 90%;
+  }
+}

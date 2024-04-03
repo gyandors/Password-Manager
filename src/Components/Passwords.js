@@ -4,19 +4,22 @@ import PasswordItems from './PasswordItems';
 
 export default function Passwords(props) {
   return (
-    <ul>
-      {props.password.map((pass) => {
-        return (
-          <PasswordItems
-            key={pass.id}
-            id={pass.id}
-            title={pass.title}
-            password={pass.password}
-            onDeletePassword={props.onDeletePassword}
-            onEditPassword={props.onEditPassword}
-          />
-        );
-      })}
-    </ul>
+    <div className="password-items">
+      {props.password.length === 0 && <h4>Nothing to show.</h4>}
+      <ul>
+        {props.password.map((pass) => {
+          return (
+            <PasswordItems
+              key={pass.id}
+              id={pass.id}
+              title={pass.title}
+              password={pass.password}
+              onDeletePassword={props.onDeletePassword}
+              onEditPassword={props.onEditPassword}
+            />
+          );
+        })}
+      </ul>
+    </div>
   );
 }

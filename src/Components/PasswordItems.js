@@ -7,10 +7,6 @@ export default function PasswordItems(props) {
   const [editTitle, setEditTitle] = useState(props.title);
   const [editPassword, setEditPassword] = useState(props.password);
 
-  function handleEditClick() {
-    setEditing(true);
-  }
-
   function handleSaveClick(e) {
     e.preventDefault();
     props.onEditPassword(
@@ -21,14 +17,10 @@ export default function PasswordItems(props) {
     setEditing(false);
   }
 
-  function handleDeleteClick() {
-    props.onDeletePassword(props.id);
-  }
-
   return (
     <li>
       {editing ? (
-        <form onSubmit={handleSaveClick}>
+        <form className="edit-password" onSubmit={handleSaveClick}>
           <input
             type="text"
             name="editTitle"
@@ -45,9 +37,14 @@ export default function PasswordItems(props) {
         </form>
       ) : (
         <>
-          <span>{props.title}</span> <span>{props.password}</span>
-          <button onClick={handleEditClick}>Edit</button>
-          <button onClick={handleDeleteClick}>Delete</button>
+          <span>{props.title}</span>
+          <span>{props.password}</span>
+          <div>
+            <button onClick={() => setEditing(true)}>Edit</button>
+            <button onClick={() => props.onDeletePassword(props.id)}>
+              Delete
+            </button>
+          </div>
         </>
       )}
     </li>
